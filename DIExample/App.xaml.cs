@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Microsoft.Practices.Unity;
 using StructureMap;
 
 namespace DIExample
@@ -9,11 +10,13 @@ namespace DIExample
     public partial class App : Application
     {
         public static Container StructureMapContainer;
+        public static UnityContainer UnityContainer;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             //createViewByHand().Show();
-            createViewByStructureMap().Show();
+            //createViewByStructureMap().Show();
+            createViewByUnity().Show();
         }
 
         private static Window createViewByHand()
@@ -35,6 +38,20 @@ namespace DIExample
             StructureMapContainer.AssertConfigurationIsValid();
 
             return StructureMapContainer.GetInstance<MainWindow>();
+        }
+
+
+        private Window createViewByUnity()
+        {
+            UnityContainer = new UnityContainer();
+            UnityContainer.RegisterType<IPresenter, Presenter>();
+            UnityContainer.RegisterType<IView, MainWindow>();
+            UnityContainer.RegisterType<IModel, ReverseModel>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ILogger, ConsoleLogger>(LoggerFactory.ConsoleLoggerName,
+                                                                new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ILogger, MessageBoxLogger>(LoggerFactory.MessageboxLoggerName,
+                                                                   new ContainerControlledLifetimeManager());
+            return UnityContainer.RegisterInstance(typeof(ILogger), UnityContainer.Resolve<ILogger>(LoggerFactory.ConsoleLoggerName)).Resolve<MainWindow>();
         }
     }
 }

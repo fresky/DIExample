@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Practices.Unity;
 
 namespace DIExample
 {
@@ -22,7 +23,13 @@ namespace DIExample
         private void loggerTypeChanged(object sender, SelectionChangedEventArgs e)
         {
             //m_Controller.SetLogger(getLoggerByHand());
-            m_Controller.SetLogger(getLoggerByStructureMap());
+            //m_Controller.SetLogger(getLoggerByStructureMap());
+            m_Controller.SetLogger(getLoggerByUnity());
+        }
+
+        private ILogger getLoggerByUnity()
+        {
+            return App.UnityContainer.Resolve<ILogger>(loggerType.SelectedItem.ToString());
         }
 
         private ILogger getLoggerByStructureMap()
