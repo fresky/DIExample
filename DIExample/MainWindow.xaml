@@ -1,0 +1,12 @@
+﻿<Window x:Class="DIExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="DI Example" Height="143" Width="331">
+    <Grid>
+        <Label Content="Logger Type:" HorizontalAlignment="Left" Margin="11,16,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="loggerType"  HorizontalAlignment="Left" Margin="114,20,0,0" VerticalAlignment="Top" Width="184" SelectionChanged="loggerTypeChanged"/>
+        <Button Content="Reverse" HorizontalAlignment="Left" Margin="223,66,0,0" VerticalAlignment="Top" Width="75" Click="reverseButtonClick"/>
+        <TextBox Name="userInput"  HorizontalAlignment="Left" Height="23" Margin="20,65,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="181"/>
+
+    </Grid>
+</Window>
