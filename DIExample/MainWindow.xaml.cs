@@ -21,7 +21,18 @@ namespace DIExample
 
         private void loggerTypeChanged(object sender, SelectionChangedEventArgs e)
         {
-            m_Controller.SetLogger(LoggerFactory.CreateLogger(loggerType.SelectedItem.ToString()));
+            //m_Controller.SetLogger(getLoggerByHand());
+            m_Controller.SetLogger(getLoggerByStructureMap());
+        }
+
+        private ILogger getLoggerByStructureMap()
+        {
+            return App.StructureMapContainer.GetInstance<ILogger>(loggerType.SelectedItem.ToString());
+        }
+
+        private ILogger getLoggerByHand()
+        {
+            return LoggerFactory.CreateLogger(loggerType.SelectedItem.ToString());
         }
 
         private void reverseButtonClick(object sender, RoutedEventArgs e)
